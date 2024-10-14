@@ -1,9 +1,10 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import { createContext, useState, useContext, ReactNode } from "react";
 
 interface AuthContextProps {
   token: string | null;
   setToken: (token: string | null) => void;
   clearToken: () => void;
+  getBearerToken: () => string | null;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -25,8 +26,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("authToken");
   };
 
+ 
+    const getBearerToken = (): string | null => {
+      if (!token) return null;
+      if (token.startsWith("Bearer ")) {
+        return token; 
+      }
+      return `Bearer ${token}`;
+    };
+
   return (
-    <AuthContext.Provider value={{ token, setToken, clearToken }}>
+    <AuthContext.Provider value={{ token, setToken, clearToken, getBearerToken}}>
       {children}
     </AuthContext.Provider>
   );

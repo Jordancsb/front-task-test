@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { api } from "../api/intances";
+import { toast } from "react-toastify";
 
 export interface TaskProps {
     title: string;
@@ -20,7 +21,12 @@ const useUpdateTask = () => {
     setLoading(true);
 
     try {
-      const response = await api.delete(`/api/task/${id}`);
+      const response = await api.delete(`/api/tasks/${id}`);
+
+      if (response.status === 204) {
+        toast.error("Tarefa deletada com sucesso!");
+        window.location.reload();
+      }
 
       return response.data;
 

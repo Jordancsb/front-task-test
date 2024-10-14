@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { api } from "../api/intances";
+import { toast } from "react-toastify";
 
 
 export const useSignUp = () => {
@@ -23,6 +24,10 @@ export const useSignUp = () => {
         password,
         role,
       });
+
+      if (response.status === 201) {
+        toast.success("Usuário criado com sucesso!");
+      }
 
       setSuccess(true);
       console.log("User created successfully:", response.data);

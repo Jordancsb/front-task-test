@@ -27,6 +27,10 @@ const useUpdateTask = () => {
         }
       });
 
+      if (response.status === 200) {
+        window.location.reload();
+      }
+
       return response.data;
 
     } catch (error) {
