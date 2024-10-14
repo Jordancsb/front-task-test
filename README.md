@@ -3,15 +3,15 @@
 Este projeto é uma aplicação web construída com **React**, **TypeScript** e **Vite**. O app apresenta um **Dashboard** para exibir informações principais e uma **Lista de Tarefas** para gerenciamento de atividades.
 
 ## Funcionalidades
-- **Dashboard** responsivo com contador de tarefas por status 
+- **Dashboard** responsivo com contador de tarefas por status ✅
 - **Lista de Tarefas** com funcionalidades para:
-  - Adicionar tarefas
-  - Editar tarefas
-  - Excluir tarefas
-  - Marcar tarefas como concluídas
-  - Filtrar tarefas por status (concluídas ou pendentes)
-- **Autenticação**.
-- Armazenamento local para salvar a lista de tarefas.
+  - Adicionar tarefas✅
+  - Editar tarefas✅
+  - Excluir tarefas✅
+  - Marcar tarefas como concluídas ⌛
+  - Filtrar tarefas por status (concluídas ou pendentes)⌛
+- **Autenticação**.✅
+- Armazenamento próprio para salvar a lista de tarefas.✅
 - Construído com **React Hooks** modernos e **TypeScript** para segurança de tipos.
 
 ## Tecnologias
