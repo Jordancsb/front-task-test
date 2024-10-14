@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EyeOffOutline, EyeOutline } from "react-ionicons";
 import { useSignUp } from "../../hooks/useRegister";
+import { useNavigate } from "react-router-dom";
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
@@ -9,16 +10,21 @@ const SignUpScreen = () => {
   const [role] = useState("ROLE_ADMIN");
   const [showPassword, setShowPassword] = useState(false);
   const { signUp, loading, error, success } = useSignUp();
+  const navigate = useNavigate(); 
+  
 
   const handleSignUp = () => {
     signUp(email, password, confirmPassword, role);
+    if (success) {
+      navigate("/login");
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100 px-5">
       <div className="w-full max-w-sm bg-white rounded-lg shadow-md p-6">
         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
-          Sign Up
+          Cadastre-se!
         </h2>
         <div className="mb-4">
           <input
@@ -62,8 +68,19 @@ const SignUpScreen = () => {
           className={`w-full py-2 bg-indigo-600 text-white rounded-md shadow hover:bg-indigo-500 transition duration-300 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={loading}
         >
-          {loading ? "Signing Up..." : "Sign Up"}
+          {loading ? "Cadastrando..." : "Cadastrar"}
         </button>
+        <div className="mt-4 text-center">
+          <p className="text-gray-600 text-sm">
+            Já tem uma conta?
+          </p>
+          <button
+            onClick={() => navigate("/login")}
+            className="text-indigo-600 hover:underline text-sm font-medium"
+          >
+            Login
+          </button>
+        </div>
       </div>
     </div>
   );
