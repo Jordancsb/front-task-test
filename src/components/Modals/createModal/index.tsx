@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import useCreateTask, { TaskProps } from "../../../hooks/useRegisterTasks";
 import { getRandomColors } from "../../../utils/getRandomColors";
+import { useAuth } from "../../../context/AuthContext";
 
 
 interface ModalTaskProps {
@@ -26,6 +27,7 @@ const ModalTask = ({ isOpen, onClose, setOpen }: ModalTaskProps) => {
 
 	const [taskData, setTaskData] = useState(initialTaskData);
 	const [tagTitle, setTagTitle] = useState("");
+	const {token} = useAuth();
 	const { execute } = useCreateTask();
 
 	const handleChange = (
@@ -64,7 +66,7 @@ const ModalTask = ({ isOpen, onClose, setOpen }: ModalTaskProps) => {
 
 	const handleSubmit = async () => {
 		try {
-			await execute(taskData);
+			await execute(taskData, token ?? '');
 			closeModal(); 
 		} catch (e) {
 			console.error("Error submit task", e);

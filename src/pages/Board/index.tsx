@@ -16,7 +16,6 @@ const Home = () => {
   const { execute, loading } = useListTasks();
   const [tasks, setTasks] = useState<TaskT[]>([]);
   const [columns, setColumns] = useState<Columns>({
-    backlog: { name: "Backlog", items: [] },
     pending: { name: "Pending", items: [] },
     todo: { name: "To Do", items: [] },
     doing: { name: "Doing", items: [] },
@@ -27,26 +26,26 @@ const Home = () => {
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const task = await execute(token ?? '', "PENDING");
+      const task = await execute(token ?? "", "PENDING");
       setTasks(task);
-    }
+    };
 
     fetchTasks();
   }, []);
 
   useEffect(() => {
     if (tasks.length > 0) {
-      setColumns(createColumnsFromTasks(tasks, {
-        backlog: { name: "Backlog", items: [] },
-        pending: { name: "Pending", items: [] },
-        todo: { name: "To Do", items: [] },
-        doing: { name: "Doing", items: [] },
-        done: { name: "Done", items: [] },
-      }));
+      setColumns(
+        createColumnsFromTasks(tasks, {
+          pending: { name: "Pending", items: [] },
+          todo: { name: "To Do", items: [] },
+          doing: { name: "Doing", items: [] },
+          done: { name: "Done", items: [] },
+        })
+      );
     }
   }, [tasks]);
-  
-  
+
   const openModal = (columnId: string) => {
     setSelectedColumn(columnId);
     setModalOpen(true);
@@ -66,8 +65,8 @@ const Home = () => {
       image: taskData.image || "",
       alt: taskData.alt || "task image",
       tags: taskData.tags || [],
-      status: "PENDING", 
-      assignedUserId: 1, 
+      status: "PENDING",
+      assignedUserId: 1,
     };
 
     const newColumns = {
@@ -77,14 +76,14 @@ const Home = () => {
         items: [...columns[selectedColumn].items, newTask],
       },
     };
-	setColumns(newColumns);
+    setColumns(newColumns);
     closeModal();
   };
 
   if (loading) {
     return <div>Loading tasks...</div>;
   }
-  
+
   return (
     <>
       <DragDropContext
@@ -92,7 +91,7 @@ const Home = () => {
       >
         <div className="w-full flex items-start justify-between px-5 pb-8 md:gap-0 gap-10">
           {Object.entries(columns).map(([columnId, column]: any) => (
-            <div className="w-full flex flex-col gap-0" key={columnId}>
+            <div className="w-full flex flex-col gap-0 items-center group" key={columnId}>
               <Droppable droppableId={columnId} key={columnId}>
                 {(provided: any) => (
                   <div
@@ -120,10 +119,11 @@ const Home = () => {
                   </div>
                 )}
               </Droppable>
+
               <div
                 onClick={() => openModal(columnId)}
-                className="flex cursor-pointer items-center justify-center gap-1 py-[10px] md:w-[90%] w-full opacity-90 bg-white rounded-lg shadow-sm text-[#555] font-medium text-[15px]"
-              >
+                className="hidden group-hover:flex cursor-pointer items-center justify-center gap-1 py-[10px] w-full md:w-[290px] w-[250px] opacity-90 bg-white rounded-lg shadow-sm text-[#555] font-medium text-[15px] transition-opacity duration-300"
+                >
                 <AddOutline color={"#555"} />
                 Adicionar Tarefa
               </div>

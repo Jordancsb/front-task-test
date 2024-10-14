@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import useUpdateTask, { TaskProps } from "../../../hooks/useUpdateTask";
+import useUpdateTask from "../../../hooks/useUpdateTask";
 import { useAuth } from "../../../context/AuthContext";
+import { TaskT } from "../../../types";
 
 
 interface ModalUpdateTaskProps {
   isOpen: boolean;
   onClose: () => void;
-  task: TaskProps; 
+  task: TaskT; 
 }
 
 const ModalUpdateTask = ({ isOpen, onClose, task }: ModalUpdateTaskProps) => {
@@ -40,7 +41,7 @@ const ModalUpdateTask = ({ isOpen, onClose, task }: ModalUpdateTaskProps) => {
 
   const handleUpdate = async () => {
     try {
-      await execute(task.id, taskData, token || '');
+      await execute(task.id, { ...taskData, deadline: taskData.deadline.toString() }, token || '');
       onClose();
     } catch (e) {
       console.error("Error updating task", e);
